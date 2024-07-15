@@ -1,0 +1,14 @@
+type Query {
+  appSettings: AppSettings
+}
+
+type AppSettings {
+  apps: [AppNameSettings]
+}
+
+type AppNameSettings {
+  appName: String
+  mdEntityLogs: String
+  activeLogs: Boolean
+  routes: [String]
+}

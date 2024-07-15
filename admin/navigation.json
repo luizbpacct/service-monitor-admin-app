@@ -1,0 +1,12 @@
+{
+  "section": "other",
+  "titleId": "vtex-monitoring-admin-app.admin.navigation.label",
+  "subSection": "vtexmonitoringadminapp",
+  "searchKeyWordsHelpers": "vtex-monitoring-admin-app.admin.navigation.search.kws",
+  "subSectionItems": [
+    {
+      "labelId": "vtex-monitoring-admin-app.admin.navigation.label",
+      "path": "/admin/vtex-monitoring-admin-app"
+    }
+  ]
+}

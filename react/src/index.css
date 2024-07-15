@@ -1,0 +1,16 @@
+.pageblock-container{
+    margin-top: 2rem !important;
+}
+
+.pageblock-title{
+    font-size: 36px;
+}
+
+.pageblock-subtitle{
+    font-size: 16px;
+    color: #727273;
+}
+
+:global(.w-two-thirds-ns):has(.pageblock-subtitle){
+    width: 100%;
+}

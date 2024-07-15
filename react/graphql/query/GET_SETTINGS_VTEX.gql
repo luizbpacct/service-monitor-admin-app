@@ -1,0 +1,10 @@
+query AppSettingsQuery {
+  appSettings @context(provider: "acctglobal.vtex-monitoring-admin-app") {
+    apps {
+      appName
+      mdEntityLogs
+      activeLogs
+      routes
+    }
+  }
+}

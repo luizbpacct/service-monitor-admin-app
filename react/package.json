@@ -1,0 +1,33 @@
+{
+  "name": "vtex-monitoring-admin-app",
+  "version": "0.1.0",
+  "devDependencies": {
+    "@types/node": "^11.12.1",
+    "@types/react": "^16.8.10",
+    "@types/react-icons": "^3.0.0",
+    "@types/react-intl": "^2.3.17",
+    "@types/uuid": "^9.0.8",
+    "@vtex/tsconfig": "^0.4.4",
+    "apollo-client": "^2.4.7",
+    "graphql": "^14.0.2",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-intl": "^2.7.2",
+    "typescript": "3.9.7",
+    "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.134.2/public/@types/vtex.render-runtime",
+    "vtex.styleguide": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.styleguide@9.146.9/public/@types/vtex.styleguide"
+  },
+  "dependencies": {
+    "@types/faker": "^4.1.5",
+    "faker": "^4.1.0",
+    "immer": "^10.1.1",
+    "json-edit-react": "^1.13.2",
+    "react-apollo": "^3.1.5",
+    "react-google-charts": "^4.0.1",
+    "react-hook-form": "^7.51.4",
+    "react-icons": "^5.2.1",
+    "uuid": "^9.0.1",
+    "zustand": "^4.5.2"
+  }
+}

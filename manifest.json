@@ -1,0 +1,68 @@
+{
+  "name": "vtex-monitoring-admin-app",
+  "vendor": "acctglobal",
+  "version": "0.1.0",
+  "title": "Service Monitor",
+  "description": "",
+  "mustUpdateAt": "2024-07-15",
+  "scripts": {
+    "postreleasy": "vtex publish"
+  },
+  "dependencies": {
+    "vtex.styleguide": "9.x"
+  },
+  "builders": {
+    "react": "3.x",
+    "admin": "0.x",
+    "messages": "1.x",
+    "node": "6.x",
+    "graphql": "1.x"
+  },
+  "settingsSchema": {
+    "title": "Service Monitor",
+    "type": "object",
+    "properties": {
+      "apps": {
+        "title": "Apps",
+        "description": "",
+        "type": "array",
+        "items": {
+          "title": "App",
+          "description": "",
+          "type": "object",
+          "properties": {
+            "appName": {
+              "title": "App Name",
+              "description": "Name of the app that will be displayed in the tab",
+              "type": "string",
+              "default": ""
+            },
+            "mdEntityLogs": {
+              "title": "Entity to save perfomance data and logs",
+              "description": "These settings only refer to logs that are saved in requests",
+              "type": "string",
+              "default": "DA"
+            },
+            "activeLogs": {
+              "title": "Active Logs",
+              "description": "",
+              "type": "boolean",
+              "default": true
+            },
+            "routes": {
+              "title": "Routes",
+              "description": "",
+              "type": "array",
+              "items": {
+                "title": "Route",
+                "description": "",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}

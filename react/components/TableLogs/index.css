@@ -1,0 +1,11 @@
+.icon-info:hover {
+  transition: 0.3s;
+  scale: 1.1;
+  cursor: pointer;
+}
+
+.icon-info.disabled {
+  opacity: 0.5;
+  cursor: initial;
+  scale: 1 !important;
+}

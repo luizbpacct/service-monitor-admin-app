@@ -1,0 +1,14 @@
+{
+  "memory": 256,
+  "ttl": 60,
+  "timeout": 10,
+  "minReplicas": 2,
+  "maxReplicas": 5,
+  "workers": 1,
+  "routes": {
+    "performance": {
+      "path": "/v1/vtexmonitoringadminapp/status/performance",
+      "public": true
+    }
+  }
+}

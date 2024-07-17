@@ -17,7 +17,7 @@ import { getPerformanceData } from '../../services/getPerformanceData'
 import { getRouteSummary } from '../../utils/performance/getRouteSummary'
 import { getErrorGraphData } from '../../utils/performance/getErrorGraphData'
 import { getRequestGraphData } from '../../utils/performance/getRequestGraphData'
-import { PaginationType } from '../../../typings/dashboard'
+import type { PaginationType } from '../../../typings/dashboard'
 import { TableLogs } from '../../../components/TableLogs'
 import { PaginationLogs } from '../../../components/PaginationLogs'
 
@@ -27,6 +27,7 @@ type DashboardProps = {
 }
 
 const Dashboard = ({ entity, routes }: DashboardProps) => {
+  console.log('TCL: Dashboard -> routes', routes)
   const currentDate = new Date()
 
   const [selectRoutes, setSelectRoutes] = useState<string[]>([])
@@ -38,6 +39,7 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
   const [initialDate, setInitialDate] = useState<Date>(
     new Date(currentDate.getFullYear(), currentDate.getMonth(), 1)
   )
+
   const [finalDate, setFinalDate] = useState<Date>(currentDate)
 
   const [pagination, setPagination] = useState<PaginationType>({
@@ -66,6 +68,7 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
 
         const dataInc = [...data]
         const dataDec = [...data]
+
         dataInc.sort(
           (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         )
@@ -123,7 +126,7 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                 size="large"
                 placeholder="Filter by route name"
                 value={
-                  routes?.map((value) => ({
+                  selectRoutes?.map((value) => ({
                     label: value,
                     value,
                     __isNew__: true,

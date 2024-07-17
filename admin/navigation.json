@@ -1,7 +1,7 @@
 {
   "section": "other",
   "titleId": "vtex-monitoring-admin-app.admin.navigation.label",
-  "subSection": "vtexmonitoringadminapp",
+  "subSection": "servicemonitor",
   "searchKeyWordsHelpers": "vtex-monitoring-admin-app.admin.navigation.search.kws",
   "subSectionItems": [
     {

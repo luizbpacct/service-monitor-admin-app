@@ -7,7 +7,6 @@ export type SettingsType = {
   apps: Array<{
     appName: string
     mdEntityLogs: string
-    activeLogs: boolean
     routes: string[]
   }>
 }

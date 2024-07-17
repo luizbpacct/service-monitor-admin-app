@@ -17,7 +17,7 @@ const MainComponent = () => {
     )
   }
 
-  if (!appSettings) {
+  if (!appSettings || !appSettings?.apps) {
     return (
       <div className={styles.loadSpinner}>
         <p>No records found</p>
@@ -38,7 +38,7 @@ const MainComponent = () => {
               active={currentTab === index}
               onClick={() => setCurrentTab(index)}
             >
-              <Dashboard entity={app.mdEntityLogs} routes={app.routes || []} />
+              <Dashboard entity={app.mdEntityLogs} routes={app.routes} />
             </Tab>
           )
         })}

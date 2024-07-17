@@ -1,4 +1,4 @@
-import { PerformanceObject } from '../utils/performance/performance'
+import type { PerformanceObject } from '../utils/performance/performance'
 
 type GetPerformanceDataProps = {
   initialDate: Date
@@ -38,12 +38,15 @@ export const getPerformanceData = async ({
     path += `&page=${pagination.page}&pageSize=${pagination.pageSize}`
   }
 
-  const result = await fetch(`/v1/vtexmonitoringadminapp/settings${path}`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'GET',
-  })
+  const result = await fetch(
+    `/api/io/v1/servicemonitor/status/performance${path}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'GET',
+    }
+  )
 
   return result.json()
 }

@@ -9,6 +9,5 @@ type AppSettings {
 type AppNameSettings {
   appName: String
   mdEntityLogs: String
-  activeLogs: Boolean
   routes: [String]
 }

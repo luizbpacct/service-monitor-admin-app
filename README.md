@@ -1,5 +1,5 @@
 <div style="width: 100%; display: flex; flex-direction: row; justify-content: center;"> 
-  <img src="./public/metadata/images/icon.png" style="max-width: 100px;" alt="Print: Valor do serviço Takeback"/>
+  <img width="50px" src="./public/metadata/images/icon.png" style="max-width: 100px;" alt="Print: Valor do serviço Takeback"/>
 </div>
 
 <div width="100%" style="text-align: center"> 

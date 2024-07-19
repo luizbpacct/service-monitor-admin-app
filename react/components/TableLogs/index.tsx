@@ -2,15 +2,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import React, { useEffect, useState } from 'react'
-import { FcInfo } from 'react-icons/fc'
-import { Table, Tag } from 'vtex.styleguide'
+import { IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5'
+import { FcSearch } from 'react-icons/fc'
+import { Table } from 'vtex.styleguide'
 
 import { ModalJsonView } from '../ModalJsonView/Index'
 import styles from './index.css'
-import { PaginationLogsType } from '../../typings/dashboard'
+import type { PaginationLogsType } from '../../typings/dashboard'
 
 type TableLogsProps = {
   items: any
+}
+
+type JsonModalData = {
+  title: string
+  msg?: string
+  json: any
 }
 
 export const TableLogs = ({ items }: TableLogsProps) => {
@@ -18,8 +25,12 @@ export const TableLogs = ({ items }: TableLogsProps) => {
   const emptyStateLabel = 'Nothing to show.'
 
   const [modalJsonView, setModalJsonView] = useState(false)
-  const [currentJson, setCurrentJson] = useState<any>(null)
-  const [currentMessage, setCurrentMessage] = useState<string>('')
+  const [modalJsonData, setModalJsonData] = useState<JsonModalData>({
+    json: null,
+    msg: '',
+    title: '',
+  })
+
   const [paginationLogs, setPaginationLogs] = useState<PaginationLogsType>({
     tableLength,
     currentPage: 1,
@@ -64,6 +75,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
     const itemFrom = paginationLogs.currentItemTo + 1
     const itemTo = tableLength * newPage
     const data = items.slice(itemFrom - 1, itemTo)
+
     goToPage(newPage, itemFrom, itemTo, data)
   }
 
@@ -73,12 +85,20 @@ export const TableLogs = ({ items }: TableLogsProps) => {
     const itemFrom = paginationLogs.currentItemFrom - tableLength
     const itemTo = paginationLogs.currentItemFrom - 1
     const data = items.slice(itemFrom - 1, itemTo)
+
     goToPage(newPage, itemFrom, itemTo, data)
+  }
+
+  const getStatusComponent = (value: boolean) => {
+    if (value) return <IoCloseCircle size={25} color="red" />
+
+    return <IoCheckmarkCircle size={25} color="green" />
   }
 
   return (
     <>
       <Table
+        onRowClick={() => {}}
         schema={{
           properties: {
             routeName: {
@@ -89,31 +109,39 @@ export const TableLogs = ({ items }: TableLogsProps) => {
               cellRenderer: ({ cellData }: any) => {
                 return <p>{new Date(cellData)?.toLocaleString()}</p>
               },
-              width: 200,
+              width: 180,
             },
             processingTime: {
-              title: 'Process time',
-              width: 100,
+              title: 'ms',
+              width: 50,
             },
             isError: {
-              title: 'Error',
-              cellRenderer: ({ cellData }: any) => (
-                <Tag type={`${cellData ? 'error' : 'success'}`}>
-                  {cellData ? 'Error' : 'Success'}
-                </Tag>
-              ),
-            },
-            requestObject: {
-              title: 'Request Object',
+              title: 'Status',
               cellRenderer: ({ cellData }: any) => (
                 <div
                   style={{
-                    justifyContent: 'center',
                     display: 'flex',
                     width: '100%',
+                    justifyContent: 'center',
                   }}
                 >
-                  <FcInfo
+                  {getStatusComponent(cellData)}
+                </div>
+              ),
+              width: 60,
+            },
+            requestObject: {
+              title: 'Request',
+              width: 70,
+              cellRenderer: ({ cellData }: any) => (
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <FcSearch
                     className={`${styles['icon-info']} ${
                       !cellData || cellData === 'null' ? styles.disabled : ''
                     }`}
@@ -121,7 +149,10 @@ export const TableLogs = ({ items }: TableLogsProps) => {
                     onClick={() => {
                       if (!cellData || cellData === 'null') return
 
-                      setCurrentJson(JSON.parse(cellData))
+                      setModalJsonData({
+                        title: 'Request',
+                        json: JSON.parse(cellData),
+                      })
                       setModalJsonView(true)
                     }}
                   />
@@ -129,19 +160,21 @@ export const TableLogs = ({ items }: TableLogsProps) => {
               ),
             },
             objectReturn: {
-              title: 'Object Return',
+              title: 'Response',
+              width: 80,
               cellRenderer: ({ cellData, rowData }: any) => {
                 const noData =
                   (!cellData || cellData === 'null') && !rowData?.msg
+
                 return (
                   <div
                     style={{
-                      justifyContent: 'center',
                       display: 'flex',
                       width: '100%',
+                      justifyContent: 'center',
                     }}
                   >
-                    <FcInfo
+                    <FcSearch
                       className={`${styles['icon-info']} ${
                         noData ? styles.disabled : ''
                       }`}
@@ -149,8 +182,11 @@ export const TableLogs = ({ items }: TableLogsProps) => {
                       onClick={() => {
                         if (noData) return
 
-                        setCurrentJson(cellData ? JSON.parse(cellData) : null)
-                        setCurrentMessage(rowData?.msg || '')
+                        setModalJsonData({
+                          title: 'Response',
+                          msg: rowData?.msg || '',
+                          json: cellData ? JSON.parse(cellData) : null,
+                        })
                         setModalJsonView(true)
                       }}
                     />
@@ -178,10 +214,10 @@ export const TableLogs = ({ items }: TableLogsProps) => {
         isOpen={modalJsonView}
         onClose={() => {
           setModalJsonView(false)
-          setCurrentMessage('')
         }}
-        jsonData={currentJson}
-        msg={currentMessage}
+        jsonData={modalJsonData.json}
+        msg={modalJsonData.msg}
+        title={modalJsonData.title}
       />
     </>
   )

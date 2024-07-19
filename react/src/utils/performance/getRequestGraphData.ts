@@ -1,17 +1,30 @@
-import { PerformanceObject } from './performance'
+import type { GraphTime } from '../../../typings/global'
+import { getDataForGraph, getDateHourForGraph } from '../getDateHourForGraph'
+import type { PerformanceObject } from './performance'
 
-export const getRequestGraphData = (fullData: PerformanceObject[] | null) => {
+type GetRequestGraphDataProps = {
+  data: PerformanceObject[] | null
+  graphTime?: GraphTime
+}
+
+export const getRequestGraphData = ({
+  data: pData,
+  graphTime = 'dateAndHour',
+}: GetRequestGraphDataProps) => {
   let graphHeader = ['Date', 'Empty']
   const graphDataDefault = [0, 0]
 
-  if (!fullData?.length) return [graphHeader, graphDataDefault]
+  if (!pData?.length) return [graphHeader, graphDataDefault]
 
   graphHeader = []
 
   const dataReturn = {} as any
 
-  for (const item of fullData) {
-    const date = new Date(item.date).toLocaleDateString()
+  for (const item of pData) {
+    const date =
+      graphTime === 'dateAndHour'
+        ? getDateHourForGraph(new Date(item.date))
+        : getDataForGraph(new Date(item.date))
 
     if (!graphHeader.includes(item.routeName.trim())) {
       graphHeader.push(item.routeName.trim())
@@ -32,8 +45,10 @@ export const getRequestGraphData = (fullData: PerformanceObject[] | null) => {
 
   // Formatar o resultado no formato desejado
   let result: any = []
+
   Object.entries(dataReturn).forEach(([date, routes]: any) => {
     const data = [date]
+
     graphHeader.forEach((header) => {
       if (!routes[header]) data.push(0)
       else data.push(routes[header].qtdRequests)

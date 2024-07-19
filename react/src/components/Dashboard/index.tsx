@@ -8,6 +8,7 @@ import {
   Box,
   Spinner,
   DatePicker,
+  Dropdown,
   EXPERIMENTAL_Select as Select,
 } from 'vtex.styleguide'
 import Chart from 'react-google-charts'
@@ -20,6 +21,8 @@ import { getRequestGraphData } from '../../utils/performance/getRequestGraphData
 import type { PaginationType } from '../../../typings/dashboard'
 import { TableLogs } from '../../../components/TableLogs'
 import { PaginationLogs } from '../../../components/PaginationLogs'
+import { GRAPH_TIME_OPTIONS } from '../../utils/constants'
+import type { DropDownOptions, GraphTime } from '../../../typings/global'
 
 type DashboardProps = {
   entity: string
@@ -27,12 +30,15 @@ type DashboardProps = {
 }
 
 const Dashboard = ({ entity, routes }: DashboardProps) => {
-  console.log('TCL: Dashboard -> routes', routes)
   const currentDate = new Date()
 
   const [selectRoutes, setSelectRoutes] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [performanceData, setPerformanceData] = useState<any>([])
+  const [graphTime, setGraphTime] = useState<DropDownOptions<GraphTime>>(
+    GRAPH_TIME_OPTIONS[0]
+  )
+
   const [totalPerformanceData, setTotalPerformanceData] = useState<number>(0)
   const [routeSummaryData, setRouteSummaryData] = useState<any>(null)
   const [performanceRender, setPerformanceRender] = useState<any>(null)
@@ -66,22 +72,23 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
           setTotalPerformanceData(rPagination.total)
         }
 
-        const dataInc = [...data]
-        const dataDec = [...data]
-
-        dataInc.sort(
+        data.sort(
           (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
         )
-        dataDec.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        )
 
-        const routeSummary = getRouteSummary(dataInc)
-        const errorGraphByRouteData = getErrorGraphData(dataInc)
-        const requestGraphByRouteData = getRequestGraphData(dataInc)
+        const routeSummary = getRouteSummary(data)
+        const errorGraphByRouteData = getErrorGraphData({
+          data,
+          graphTime: graphTime.value,
+        })
+
+        const requestGraphByRouteData = getRequestGraphData({
+          data,
+          graphTime: graphTime.value,
+        })
 
         setRouteSummaryData(routeSummary)
-        setPerformanceData(dataDec)
+        setPerformanceData(data)
         setPerformanceRender({
           errorGraphByRouteData,
           requestGraphByRouteData,
@@ -90,7 +97,26 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
       .finally(() => {
         setLoading(false)
       })
-  }, [initialDate, finalDate, selectRoutes, pagination])
+  }, [initialDate, finalDate, selectRoutes, pagination, entity])
+
+  useEffect(() => {
+    if (!performanceData) return
+
+    const errorGraphByRouteData = getErrorGraphData({
+      data: performanceData,
+      graphTime: graphTime.value,
+    })
+
+    const requestGraphByRouteData = getRequestGraphData({
+      data: performanceData,
+      graphTime: graphTime.value,
+    })
+
+    setPerformanceRender({
+      errorGraphByRouteData,
+      requestGraphByRouteData,
+    })
+  }, [graphTime])
 
   return (
     <div className={style['dashboard-tab']}>
@@ -106,37 +132,24 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
         <Box title="Performance and Logs Data">
           <div className={style['dashboard-tab-body--contentPerformData']}>
             <div className={style['dashboard-tab-body--boxDataPicker']}>
-              <DatePicker
-                label="Data Inicial"
-                value={initialDate}
-                onChange={(date: Date) => setInitialDate(date)}
-                locale="pt-BR"
-              />
-              <DatePicker
-                label="Data Final"
-                value={finalDate}
-                onChange={(date: Date) => setFinalDate(date)}
-                locale="pt-BR"
-              />
-            </div>
-            <div>
-              <Select
-                multi
-                label="Routes"
-                size="large"
-                placeholder="Filter by route name"
-                value={
-                  selectRoutes?.map((value) => ({
-                    label: value,
-                    value,
-                    __isNew__: true,
-                  })) || []
-                }
-                options={routes}
-                onChange={(values: any) => {
-                  setSelectRoutes(values?.map((item: any) => item.value))
-                }}
-              />
+              <div className={style.boxOne}>
+                <DatePicker
+                  label="Start date"
+                  size="large"
+                  value={initialDate}
+                  onChange={(date: Date) => setInitialDate(date)}
+                  locale="pt-BR"
+                />
+              </div>
+              <div className={style.boxTwo}>
+                <DatePicker
+                  label="End date"
+                  size="large"
+                  value={finalDate}
+                  onChange={(date: Date) => setFinalDate(date)}
+                  locale="pt-BR"
+                />
+              </div>
             </div>
             <div>
               <PaginationLogs
@@ -146,29 +159,30 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
               />
             </div>
             {!loading ? (
-              <>
+              <div className={style['dashboard-tab-body--boxData']}>
                 <Box title="Summarized data">
                   <Table
+                    onRowClick={() => {}}
                     schema={{
                       properties: {
                         route: {
                           title: 'Route',
                         },
                         'processTime(AVG)': {
-                          title: 'Process time (ms)(AVG)',
-                          width: 200,
+                          title: 'ms (AVG)',
+                          width: 100,
                         },
                         qtdErrors: {
-                          title: 'Qtd errors',
-                          width: 100,
+                          title: 'Errors',
+                          width: 70,
                         },
                         qtdRequest: {
-                          title: 'Qtd Request',
-                          width: 100,
+                          title: 'Request',
+                          width: 80,
                         },
                         'qtdRequestDay(AVG)': {
-                          title: 'qtd Request (Day)(AVG)',
-                          width: 200,
+                          title: 'Request (Day)(AVG)',
+                          width: 150,
                         },
                       },
                     }}
@@ -177,7 +191,45 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                     density="high"
                   />
                 </Box>
-
+                <div className={style['dashboard-tab-body--boxRoutesAndTime']}>
+                  <div className={style.boxOne}>
+                    <Select
+                      multi
+                      id="selectRoutes"
+                      label="Routes"
+                      size="large"
+                      placeholder="Filter by route name"
+                      value={
+                        selectRoutes?.map((value) => ({
+                          label: value,
+                          value,
+                          __isNew__: true,
+                        })) || []
+                      }
+                      options={routes?.map((value) => ({
+                        label: value,
+                        value,
+                      }))}
+                      onChange={(values: any) => {
+                        setSelectRoutes(values?.map((item: any) => item.value))
+                      }}
+                    />
+                  </div>
+                  <div className={style.boxTwo}>
+                    <Dropdown
+                      size="large"
+                      label="Graph time"
+                      options={GRAPH_TIME_OPTIONS}
+                      value={graphTime.value}
+                      onChange={(_: any, v: GraphTime) => {
+                        setGraphTime({
+                          label: v,
+                          value: v,
+                        })
+                      }}
+                    />
+                  </div>
+                </div>
                 <div className={style['dashboard-tab-body--boxCharts']}>
                   <Box title="Errors">
                     <Chart
@@ -199,10 +251,10 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                   </Box>
                 </div>
 
-                <Box title="Full listing of events">
+                <Box title="Logs">
                   <TableLogs items={performanceData} />
                 </Box>
-              </>
+              </div>
             ) : (
               <div className={style['dashboard-loadSpinner']}>
                 <Spinner color="#3F3F40" />

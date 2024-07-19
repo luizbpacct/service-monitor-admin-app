@@ -122,3 +122,32 @@
   flex-direction: row;
   gap: 15px;
 }
+
+.dashboard-tab-body--boxData {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.dashboard-tab-body--boxDataPicker .boxOne {
+  width: 50%;
+}
+
+.dashboard-tab-body--boxDataPicker .boxTwo {
+  width: 50%;
+}
+
+
+.dashboard-tab-body--boxRoutesAndTime{
+  display: flex;
+  gap: 10px;
+}
+
+.dashboard-tab-body--boxRoutesAndTime .boxOne {
+  width: 80%;
+}
+
+.dashboard-tab-body--boxRoutesAndTime .boxTwo {
+  width: 20%;
+}

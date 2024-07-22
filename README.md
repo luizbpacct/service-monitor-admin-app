@@ -1,5 +1,5 @@
 <div align="center">
-  <img width="50px" src="./public/metadata/images/icon.png" style="max-width: 100px;" alt="Print: Valor do serviço Takeback"/>
+  <img width="100px" src="./public/metadata/images/icon.png" style="max-width: 100px;" alt="Print: Valor do serviço Takeback"/>
 </div>
 
 <div align="center">

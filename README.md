@@ -1,8 +1,8 @@
-<div style="width: 100%; display: flex; flex-direction: row; justify-content: center;"> 
+<div align="center">
   <img width="50px" src="./public/metadata/images/icon.png" style="max-width: 100px;" alt="Print: Valor do serviço Takeback"/>
 </div>
 
-<div width="100%" style="text-align: center"> 
+<div align="center">
   <h1>Service Monitor</h1>
 </div>
 
@@ -28,17 +28,17 @@ Ter uma entidade criada no Masterdata com as seguintes propriedades:
 | routeName       | `Varchar 50`    | **Yes**            | **Yes**            |
 
 #### 2º - Popular a entidade 
-O serviço da VTEX estar populando informação na entidade que foi criada com as informações do passo anterior, para isso use a biblioteca **[smonitorpkg](https://github.com/luizbpacct/smonitorpkg)** que foi criada especificadamente para facilitar a população dos dados na entidade acima, no repositório você encontra um tutorial de como adicionar a biblioteca a seu código.
+O serviço da VTEX estar populando informação na entidade que foi criada com as informações do passo anterior, para isso use a biblioteca **[smonitorpkg](https://github.com/luizbpacct/smonitorpkg)** que foi criada especificamente  para facilitar a população dos dados na entidade acima, no repositório você encontra um tutorial de como adicionar a biblioteca a seu código.
 
 ## 🚀 Instalando
 
 > Caso o app ainda não foi publicado execute esses comandos:
 
 ```bash
-# Baixa as as dependencias dos tipos
+# Baixa as as dependências dos tipos
 $ vtex setup --typings
 
-# Baixa as dependencias
+# Baixa as dependências
 $ yarn
 
 # Faz login na loja
@@ -74,39 +74,39 @@ Dentro das configurações tera um campo para cadastrar os apps que serão monit
 
 ## ☕ Como utilizar
 
-Na barra alteral do admin da sua loja, entre aba `Aplicativos` e na Divisão `Apps Instalados` busque pelo menu `Service Monitor`
+Na barra lalteral do admin da sua loja, entre aba `Aplicativos` e na Divisão `Apps Instalados` busque pelo menu `Service Monitor`
 
 ![menu vtex](public/assets/menu-vtex.png)
 
-Quando a pagina é acessada, ele exibe uma tab para cada app que foi cadastrado nas [configurações](#️-configurando) e cada tab é separada pelas seguntes seções:
+Quando a página é acessada, ele exibe uma tab para cada app que foi cadastrado nas [configurações](#️-configurando) e cada tab é separada pelas seguntes seções:
 
 ### Filtro de logs
 Logo no inicio, temos as opções de `Filtragem por data` nesses campos são inceridos a data inicial e final que os logs foram registrados:
 
 ![Filter by date](public/assets/filterByDate.png)
 
-### Paginação
-Por se tratar de uma quantidade consideravel de logs, foi adicionado um sistema de paginação que busca da VTEX as informações por pagina, ou seja, não busca todos os registros do periodo de uma vez mas sim por pagina no limite de registros que foi configurado no campo `show registers`, e para navegar entre as paginas, basta utilizar os botões do lado direito, isso foi construido visando um melhor desempenho da pagina.
+### páginação
+Por se tratar de uma quantidade considerável de logs, foi adicionado um sistema de páginação que busca da VTEX as informações por página, ou seja, não busca todos os registros do periodo de uma vez mas sim por página no limite de registros que foi configurado no campo `show registers`, e para navegar entre as páginas, basta utilizar os botões do lado direito, isso foi construído visando um melhor desempenho da página.
 
-![Pagination](public/assets/pagination.png)
+![págination](public/assets/págination.png)
 
 ### Rotas
-Nessa sessão é listado as rotas que foram cadastradas no campo de rotas na [configuração](#️-configurando) do app, nele é possivel filtrar a requisição que é feita no na base de dados a a partir das rotas selecionadas. No campo `Graph time` é o formato que os graficos abaixo seram exibidos, sendo por data ou por data e hora.
+Nessa sessão é listado as rotas que foram cadastradas no campo de rotas na [configuração](#️-configurando) do app, nele é possível filtrar a requisição que é feita no na base de dados a a partir das rotas selecionadas. No campo `Graph time` é o formato que os gráficos abaixo serão exibidos, sendo por data ou por data e hora.
 
 ![Routes](public/assets/routes.png)
 
 ### Gráficos
- A partir dos dados obtidos na entidade de dados, é plotado dois graficos na tela o de `Erros` e o de `Requisições` sendo que os dois usam os registros que foram obtidos a partir do range de data que foi selecionado e na paginação atual.
+ A partir dos dados obtidos na entidade de dados, é plotado dois gráficos na tela o de `Erros` e o de `Requisições` sendo que os dois usam os registros que foram obtidos a partir do range de data que foi selecionado e na páginação atual.
 
  ![Graph Errors](public/assets/graph-errors.png)
  
  ![Graph Requests](public/assets/graph-requests.png)
 
  ### Logs
- Também a partir dos registros que foram obtidos a partir do range de data que foi selecionado e da paginação atual, é exibido uma listagem de todos os logs registrados na entidade (linha a linha) e em cada linha é possivel observar as seguintes informarções:
+ Também a partir dos registros que foram obtidos a partir do range de data que foi selecionado e da páginação atual, é exibido uma listagem de todos os logs registrados na entidade (linha a linha) e em cada linha é possível observar as seguintes informações:
  - Nome da rota
  - Data e hora do registro
- - Tempo de processamento em milessegundos
+ - Tempo de processamento em milissegundos
  - Status da requisição se foi de erro ou não
  - O Objeto que foi enviado para a requisição
  - O Objeto de resposta da requisição e em caso de erro é exibida também a mensagem de erro (caso haja).
@@ -117,7 +117,7 @@ Nessa sessão é listado as rotas que foram cadastradas no campo de rotas na [co
 ![Object response](public/assets/objectResponse.png)
 
 
-## Icones utilizados
+## Ícones utilizados
 - <a href="https://www.flaticon.com/free-icons/server" title="server icons">Server icons created by RaftelDesign - Flaticon</a>
 - <a href="https://www.flaticon.com/free-icons/search" title="search icons">Search icons created by Maxim Basinski Premium - Flaticon</a>
 ![alt text](image.png)

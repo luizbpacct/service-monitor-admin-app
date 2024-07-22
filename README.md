@@ -8,11 +8,12 @@
 
 O **Service Monitor** é um aplicativo para análise e visualização de dados e métricas de serviços criados na plataforma VTEX. Este aplicativo oferece um componente de dashboard que apresenta uma visão detalhada do comportamento do app em produção através de gráficos e indicadores claros. Com ele, é possível monitorar o desempenho das rotas, engajamento do usuário e eficiência operacional diretamente no painel administrativo VTEX.
 
-## Prerequisites
+## Pré-requisitos
 
 ### Para que a ferramenta funcione, é necessário:
 
-**1º** Ter uma entidade criada no Masterdata com as seguintes propriedades:
+#### 1º - Entidade de dados criada 
+Ter uma entidade criada no Masterdata com as seguintes propriedades:
 
 | Name            | Type          | Is filterable? | Is searchable? |
 |-----------------|---------------|----------------|----------------|
@@ -26,7 +27,8 @@ O **Service Monitor** é um aplicativo para análise e visualização de dados e
 | requestObject   | `Text`          | **-**              | **-**              |
 | routeName       | `Varchar 50`    | **Yes**            | **Yes**            |
 
-**2º** O serviço da VTEX estar populando informação na entidade que foi criada com as informações do passo anterior, para isso use a biblioteca **[smonitorpkg](https://github.com/luizbpacct/smonitorpkg)** que foi criada especificadamente para facilitar a população dos dados na entidade acima, no repositório você encontra um tutorial de como adicionar a biblioteca a seu código.
+#### 2º - Popular a entidade 
+O serviço da VTEX estar populando informação na entidade que foi criada com as informações do passo anterior, para isso use a biblioteca **[smonitorpkg](https://github.com/luizbpacct/smonitorpkg)** que foi criada especificadamente para facilitar a população dos dados na entidade acima, no repositório você encontra um tutorial de como adicionar a biblioteca a seu código.
 
 ## 🚀 Instalando
 

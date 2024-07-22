@@ -88,7 +88,12 @@ Logo no inicio, temos as opções de `Filtragem por data` nesses campos são inc
 ### páginação
 Por se tratar de uma quantidade considerável de logs, foi adicionado um sistema de páginação que busca da VTEX as informações por página, ou seja, não busca todos os registros do periodo de uma vez mas sim por página no limite de registros que foi configurado no campo `show registers`, e para navegar entre as páginas, basta utilizar os botões do lado direito, isso foi construído visando um melhor desempenho da página.
 
-![págination](public/assets/págination.png)
+![págination](public/assets/pagination.png)
+
+### Dados sumarizados
+Nessa sessão é exibido os dados que foram obtidos a partir do range de data que foi selecionado e na páginação atual de forma sumarizada, trazendo uma visão geral dos logs.
+
+![Summarized Data](public/assets/summarizedData.png)
 
 ### Rotas
 Nessa sessão é listado as rotas que foram cadastradas no campo de rotas na [configuração](#️-configurando) do app, nele é possível filtrar a requisição que é feita no na base de dados a a partir das rotas selecionadas. No campo `Graph time` é o formato que os gráficos abaixo serão exibidos, sendo por data ou por data e hora.

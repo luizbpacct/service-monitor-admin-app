@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@lcbp/smonitorpkg": "^0.2.0",
     "@vtex/clients": "^2.21.0",
     "co-body": "^6.0.0"
   },

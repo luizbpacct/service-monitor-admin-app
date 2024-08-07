@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import React, { useState } from 'react'
-import { Modal, InputButton } from 'vtex.styleguide'
+import { Modal, InputButton, Box, Tag } from 'vtex.styleguide'
 import { JsonEditor } from 'json-edit-react'
 
 import style from './index.css'
@@ -13,13 +13,28 @@ type ModalJsonViewProps = {
   onClose: () => void
   jsonData?: Record<string, any>
   msg?: string
+  authType?: string[]
   title: string
+}
+
+const getColorAuthTag = (auth: string) => {
+  switch (auth) {
+    case 'ADMIN':
+      return '#F71963'
+
+    case 'STORE':
+      return '#134CD8'
+
+    default:
+      return '#3C896D'
+  }
 }
 
 export const ModalJsonView = ({
   onClose,
   isOpen,
   jsonData,
+  authType,
   msg,
   title,
 }: ModalJsonViewProps) => {
@@ -35,6 +50,18 @@ export const ModalJsonView = ({
   return (
     <Modal centered isOpen={isOpen} onClose={onClose} title={title}>
       <div className={style['modal-json-body']}>
+        {!!authType?.length && (
+          <div className={style['modal-json-auth']}>
+            <span>Authentications</span>
+            <div className={style['modal-json-auth-box']}>
+              {authType.map((auth: string) => (
+                <Tag key={auth} bgColor={getColorAuthTag(auth)}>
+                  {auth}
+                </Tag>
+              ))}
+            </div>
+          </div>
+        )}
         {msg && (
           <form
             onSubmit={async (e: any) => {

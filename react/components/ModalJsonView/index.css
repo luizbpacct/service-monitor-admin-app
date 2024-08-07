@@ -4,3 +4,21 @@
   justify-content: center;
   gap: 15px;
 }
+
+.modal-json-auth {
+  margin-bottom: 10px;
+}
+
+.modal-json-auth span {
+  margin-bottom: 8px;
+  display: block;
+  font-family: Fabriga, -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+  font-weight: 400;
+  color: #3f3f40;
+  font-size: .875rem;
+}
+
+.modal-json-auth-box {
+  display: flex;
+  gap: 6px;
+}

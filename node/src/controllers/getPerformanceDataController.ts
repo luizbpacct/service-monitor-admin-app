@@ -1,6 +1,7 @@
+import { ServiceMonitorClass } from '@lcbp/smonitorpkg'
+
 import { securityCheck } from '../../middlewares/securityCheck'
 import { errorDefault } from '../utils/errorDefault'
-import { PerformanceLogClass } from '../utils/performanceAnalysis/PerformanceLogClass'
 
 const getPerformanceDataController = async (ctx: Context) => {
   try {
@@ -33,18 +34,20 @@ const getPerformanceDataController = async (ctx: Context) => {
       return
     }
 
-    const performanceObject = new PerformanceLogClass({
-      ctx,
-      entity,
-    })
+    const performanceObject = new ServiceMonitorClass()
 
     ctx.body = await performanceObject.getData({
-      startDate,
-      endDate,
-      routes: routes ? routes.split(',') : [],
-      pagination: {
-        page,
-        pageSize,
+      ctx,
+      entity,
+      data: {
+        startDate,
+        endDate,
+        routes: routes ? routes.split(',') : [],
+        pagination: {
+          page,
+          pageSize,
+        },
+        sort: 'date DESC',
       },
     })
   } catch (err) {

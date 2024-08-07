@@ -23,6 +23,7 @@ import { TableLogs } from '../../../components/TableLogs'
 import { PaginationLogs } from '../../../components/PaginationLogs'
 import { GRAPH_TIME_OPTIONS } from '../../utils/constants'
 import type { DropDownOptions, GraphTime } from '../../../typings/global'
+import { getAuthTypeGraphData } from '../../utils/performance/getAuthTypeGraphData'
 
 type DashboardProps = {
   entity: string
@@ -47,6 +48,16 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
   )
 
   const [finalDate, setFinalDate] = useState<Date>(currentDate)
+
+  const getTableLogsData = () => {
+    const dataTableLogs = [...performanceData]
+
+    dataTableLogs.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
+
+    return dataTableLogs
+  }
 
   const [pagination, setPagination] = useState<PaginationType>({
     currentPage: 1,
@@ -87,11 +98,17 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
           graphTime: graphTime.value,
         })
 
+        const requestAuthTypeGraphData = getAuthTypeGraphData({
+          data,
+          graphTime: graphTime.value,
+        })
+
         setRouteSummaryData(routeSummary)
         setPerformanceData(data)
         setPerformanceRender({
           errorGraphByRouteData,
           requestGraphByRouteData,
+          requestAuthTypeGraphData,
         })
       })
       .finally(() => {
@@ -112,9 +129,15 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
       graphTime: graphTime.value,
     })
 
+    const requestAuthTypeGraphData = getAuthTypeGraphData({
+      data: performanceData,
+      graphTime: graphTime.value,
+    })
+
     setPerformanceRender({
       errorGraphByRouteData,
       requestGraphByRouteData,
+      requestAuthTypeGraphData,
     })
   }, [graphTime])
 
@@ -188,7 +211,7 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                     }}
                     items={routeSummaryData || []}
                     fullWidth
-                    density="high"
+                    density="medium"
                   />
                 </Box>
                 <div className={style['dashboard-tab-body--boxRoutesAndTime']}>
@@ -249,10 +272,19 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                       legendToggle
                     />
                   </Box>
+                  <Box title="Auth">
+                    <Chart
+                      chartType="Line"
+                      data={performanceRender?.requestAuthTypeGraphData || []}
+                      width="100%"
+                      height="400px"
+                      legendToggle
+                    />
+                  </Box>
                 </div>
 
                 <Box title="Logs">
-                  <TableLogs items={performanceData} />
+                  <TableLogs items={getTableLogsData()} />
                 </Box>
               </div>
             ) : (

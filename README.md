@@ -22,7 +22,7 @@ Ter uma entidade criada no Masterdata com as seguintes propriedades:
 | date            | `Date And Time` | **Yes**            | **Yes**            |
 | isError         | `Boolean`       | **Yes**            | **Yes**            |
 | msg             | `Text`          | **-**              | **-**              |
-| objectReturn    | `Text`          | **No**             | **No**             |
+| returnObject    | `Text`          | **No**             | **No**             |
 | processingTime  | `Integer`       | **No**             | **No**             |
 | requestObject   | `Text`          | **-**              | **-**              |
 | routeName       | `Varchar 50`    | **Yes**            | **Yes**            |
@@ -69,7 +69,7 @@ Dentro das configurações tera um campo para cadastrar os apps que serão monit
 - A entidade do masterdata onde os dados estão sendo registrados;
 - As rotas que o seu app registra para conseguir realizar os filtros na aplicação.
 
-![Configurações](public/assets/Configurações.png)
+![Configurações](public/assets/configuration.png)
 
 
 ## ☕ Como utilizar

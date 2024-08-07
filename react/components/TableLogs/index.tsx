@@ -18,6 +18,7 @@ type JsonModalData = {
   title: string
   msg?: string
   json: any
+  authType?: string[]
 }
 
 export const TableLogs = ({ items }: TableLogsProps) => {
@@ -29,6 +30,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
     json: null,
     msg: '',
     title: '',
+    authType: [],
   })
 
   const [paginationLogs, setPaginationLogs] = useState<PaginationLogsType>({
@@ -98,11 +100,13 @@ export const TableLogs = ({ items }: TableLogsProps) => {
   return (
     <>
       <Table
+        containerHeight={516}
         onRowClick={() => {}}
         schema={{
           properties: {
             routeName: {
               title: 'Route',
+              width: 300,
             },
             date: {
               title: 'Date',
@@ -133,7 +137,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
             requestObject: {
               title: 'Request',
               width: 70,
-              cellRenderer: ({ cellData }: any) => (
+              cellRenderer: ({ cellData, rowData }: any) => (
                 <div
                   style={{
                     display: 'flex',
@@ -149,8 +153,19 @@ export const TableLogs = ({ items }: TableLogsProps) => {
                     onClick={() => {
                       if (!cellData || cellData === 'null') return
 
+                      let authType = []
+
+                      try {
+                        if (rowData?.authType) {
+                          authType.push(...JSON.parse(rowData.authType))
+                        }
+                      } catch {
+                        authType = []
+                      }
+
                       setModalJsonData({
                         title: 'Request',
+                        authType,
                         json: JSON.parse(cellData),
                       })
                       setModalJsonView(true)
@@ -159,7 +174,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
                 </div>
               ),
             },
-            objectReturn: {
+            returnObject: {
               title: 'Response',
               width: 80,
               cellRenderer: ({ cellData, rowData }: any) => {
@@ -208,13 +223,14 @@ export const TableLogs = ({ items }: TableLogsProps) => {
           totalItems: items.length,
         }}
         fullWidth
-        density="high"
+        density="medium"
       />
       <ModalJsonView
         isOpen={modalJsonView}
         onClose={() => {
           setModalJsonView(false)
         }}
+        authType={modalJsonData.authType}
         jsonData={modalJsonData.json}
         msg={modalJsonData.msg}
         title={modalJsonData.title}

@@ -4,7 +4,7 @@
 import React from 'react'
 import { Pagination } from 'vtex.styleguide'
 
-import { PaginationType } from '../../typings/dashboard'
+import type { PaginationType } from '../../typings/dashboard'
 
 type PaginationLogsProps = {
   pagination: PaginationType
@@ -34,6 +34,7 @@ export const PaginationLogs = ({
     const newPage = pagination.currentPage + 1
     const itemFrom = pagination.currentItemTo + 1
     const itemTo = pagination.pageSize * newPage
+
     goToPage(newPage, itemFrom, itemTo)
   }
 
@@ -42,6 +43,7 @@ export const PaginationLogs = ({
     const newPage = pagination.currentPage - 1
     const itemFrom = pagination.currentItemFrom - pagination.pageSize
     const itemTo = pagination.currentItemFrom - 1
+
     goToPage(newPage, itemFrom, itemTo)
   }
 

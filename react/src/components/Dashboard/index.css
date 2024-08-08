@@ -139,6 +139,12 @@
 }
 
 
+/* .dashboard-tab-body--boxDataPicker .boxThree :global(.vtex-button){
+  height: 48px;
+  } */
+
+
+
 .dashboard-tab-body--boxRoutesAndTime{
   display: flex;
   gap: 10px;
@@ -148,6 +154,18 @@
   width: 80%;
 }
 
+
 .dashboard-tab-body--boxRoutesAndTime .boxTwo {
   width: 20%;
 }
+
+.dashboard-tab-body--boxRoutesAndTime .boxThree {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+}
+
+.dashboard-tab-body--boxRoutesAndTime .boxThree :global(.vtex-button__label) {
+  padding: 0 12px;
+}
+

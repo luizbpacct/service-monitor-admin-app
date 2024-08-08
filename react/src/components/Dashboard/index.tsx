@@ -3,6 +3,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable max-params */
 import React, { useEffect, useState } from 'react'
+import { FiRefreshCcw } from 'react-icons/fi'
 import {
   Table,
   Box,
@@ -10,6 +11,7 @@ import {
   DatePicker,
   Dropdown,
   EXPERIMENTAL_Select as Select,
+  Button,
 } from 'vtex.styleguide'
 import Chart from 'react-google-charts'
 
@@ -48,6 +50,12 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
   )
 
   const [finalDate, setFinalDate] = useState<Date>(currentDate)
+  const [pagination, setPagination] = useState<PaginationType>({
+    currentPage: 1,
+    pageSize: 100,
+    currentItemFrom: 1,
+    currentItemTo: 100,
+  })
 
   const getTableLogsData = () => {
     const dataTableLogs = [...performanceData]
@@ -59,14 +67,7 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
     return dataTableLogs
   }
 
-  const [pagination, setPagination] = useState<PaginationType>({
-    currentPage: 1,
-    pageSize: 100,
-    currentItemFrom: 1,
-    currentItemTo: 100,
-  })
-
-  useEffect(() => {
+  const getData = () => {
     setLoading(true)
     getPerformanceData({
       initialDate,
@@ -114,7 +115,11 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
       .finally(() => {
         setLoading(false)
       })
-  }, [initialDate, finalDate, selectRoutes, pagination, entity])
+  }
+
+  useEffect(() => {
+    getData()
+  }, [initialDate, finalDate, pagination, entity])
 
   useEffect(() => {
     if (!performanceData) return
@@ -217,6 +222,7 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                 <div className={style['dashboard-tab-body--boxRoutesAndTime']}>
                   <div className={style.boxOne}>
                     <Select
+                      valuesMaxHeight={42}
                       multi
                       id="selectRoutes"
                       label="Routes"
@@ -237,6 +243,11 @@ const Dashboard = ({ entity, routes }: DashboardProps) => {
                         setSelectRoutes(values?.map((item: any) => item.value))
                       }}
                     />
+                  </div>
+                  <div className={style.boxThree}>
+                    <Button size="large" onClick={() => getData()}>
+                      <FiRefreshCcw size={20} />
+                    </Button>
                   </div>
                   <div className={style.boxTwo}>
                     <Dropdown

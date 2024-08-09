@@ -1,5 +1,5 @@
 {
-  "name": "vtex-monitoring-admin-app",
+  "name": "service-monitor-admin-app",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

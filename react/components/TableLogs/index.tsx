@@ -4,14 +4,16 @@
 import React, { useEffect, useState } from 'react'
 import { IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5'
 import { FcSearch } from 'react-icons/fc'
-import { Table } from 'vtex.styleguide'
+import { Table, EXPERIMENTAL_Select as Select } from 'vtex.styleguide'
 
 import { ModalJsonView } from '../ModalJsonView/Index'
 import styles from './index.css'
 import type { PaginationLogsType } from '../../typings/dashboard'
+import type { PerformanceObject } from '../../src/utils/performance/performance'
+import useFilters from './useFilters'
 
 type TableLogsProps = {
-  items: any
+  items: PerformanceObject[]
 }
 
 type JsonModalData = {
@@ -25,6 +27,9 @@ export const TableLogs = ({ items }: TableLogsProps) => {
   const tableLength = 15
   const emptyStateLabel = 'Nothing to show.'
 
+  const { filterStatement, filteredItems, filters, setFilterStatement } =
+    useFilters<PerformanceObject>(items)
+
   const [modalJsonView, setModalJsonView] = useState(false)
   const [modalJsonData, setModalJsonData] = useState<JsonModalData>({
     json: null,
@@ -36,10 +41,10 @@ export const TableLogs = ({ items }: TableLogsProps) => {
   const [paginationLogs, setPaginationLogs] = useState<PaginationLogsType>({
     tableLength,
     currentPage: 1,
-    slicedData: items.slice(0, tableLength),
+    slicedData: filteredItems.slice(0, tableLength),
     currentItemFrom: 1,
     currentItemTo: tableLength,
-    itemsLength: items.length,
+    itemsLength: filteredItems.length,
     emptyStateLabel,
   })
 
@@ -47,13 +52,13 @@ export const TableLogs = ({ items }: TableLogsProps) => {
     setPaginationLogs({
       tableLength,
       currentPage: 1,
-      slicedData: items.slice(0, tableLength),
+      slicedData: filteredItems.slice(0, tableLength),
       currentItemFrom: 1,
       currentItemTo: tableLength,
-      itemsLength: items.length,
+      itemsLength: filteredItems.length,
       emptyStateLabel,
     })
-  }, [items])
+  }, [filteredItems])
 
   const goToPage = (
     currentPage: any,
@@ -67,7 +72,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
       slicedData,
       currentItemFrom,
       currentItemTo,
-      itemsLength: items.length,
+      itemsLength: filteredItems.length,
       emptyStateLabel,
     })
   }
@@ -76,7 +81,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
     const newPage = paginationLogs.currentPage + 1
     const itemFrom = paginationLogs.currentItemTo + 1
     const itemTo = tableLength * newPage
-    const data = items.slice(itemFrom - 1, itemTo)
+    const data = filteredItems.slice(itemFrom - 1, itemTo)
 
     goToPage(newPage, itemFrom, itemTo, data)
   }
@@ -86,7 +91,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
     const newPage = paginationLogs.currentPage - 1
     const itemFrom = paginationLogs.currentItemFrom - tableLength
     const itemTo = paginationLogs.currentItemFrom - 1
-    const data = items.slice(itemFrom - 1, itemTo)
+    const data = filteredItems.slice(itemFrom - 1, itemTo)
 
     goToPage(newPage, itemFrom, itemTo, data)
   }
@@ -102,6 +107,25 @@ export const TableLogs = ({ items }: TableLogsProps) => {
       <Table
         containerHeight={516}
         onRowClick={() => {}}
+        filters={{
+          alwaysVisibleFilters: ['auth', 'processingTime'],
+          statements: filterStatement,
+          onChangeStatements: (statements: any) => {
+            setFilterStatement(statements)
+          },
+          clearAllFiltersButtonLabel: 'Clear Filters',
+          collapseLeft: true,
+          options: {
+            auth: {
+              label: 'Authentications',
+              ...filters.auth,
+            },
+            processingTime: {
+              label: 'Processing Time',
+              ...filters.processingTime,
+            },
+          },
+        }}
         schema={{
           properties: {
             routeName: {
@@ -212,7 +236,6 @@ export const TableLogs = ({ items }: TableLogsProps) => {
           },
         }}
         items={paginationLogs.slicedData}
-        // items={performanceData || []}
         pagination={{
           onNextClick: handleNextClick,
           onPrevClick: handlePrevClick,
@@ -220,7 +243,7 @@ export const TableLogs = ({ items }: TableLogsProps) => {
           currentItemTo: paginationLogs.currentItemTo,
           textShowRows: 'Show rows',
           textOf: 'of',
-          totalItems: items.length,
+          totalItems: filteredItems.length,
         }}
         fullWidth
         density="medium"

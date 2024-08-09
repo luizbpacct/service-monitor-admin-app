@@ -1,6 +1,6 @@
 {
-  "admin.app.vtex-monitoring-admin-app": {
+  "admin.app.service-monitor-admin-app": {
     "component": "index",
-    "path": "/admin/app/vtex-monitoring-admin-app"
+    "path": "/admin/app/service-monitor-admin-app"
   }
 }

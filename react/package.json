@@ -1,5 +1,5 @@
 {
-  "name": "vtex-monitoring-admin-app",
+  "name": "service-monitor-admin-app",
   "version": "0.1.0",
   "devDependencies": {
     "@types/node": "^11.12.1",

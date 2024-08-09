@@ -4,3 +4,8 @@ export type DropDownOptions<T = string> = {
 }
 
 export type GraphTime = 'dateAndHour' | 'date'
+
+export type OptionSelect = {
+  label: string
+  value: string
+}

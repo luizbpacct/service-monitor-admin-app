@@ -21,11 +21,11 @@ import { getRouteSummary } from '../../utils/performance/getRouteSummary'
 import { getErrorGraphData } from '../../utils/performance/getErrorGraphData'
 import { getRequestGraphData } from '../../utils/performance/getRequestGraphData'
 import type { PaginationType } from '../../../typings/dashboard'
-import { TableLogs } from '../../../components/TableLogs'
-import { PaginationLogs } from '../../../components/PaginationLogs'
 import { GRAPH_TIME_OPTIONS } from '../../utils/constants'
 import type { DropDownOptions, GraphTime } from '../../../typings/global'
 import { getAuthTypeGraphData } from '../../utils/performance/getAuthTypeGraphData'
+import { TableLogs } from '../TableLogs'
+import { PaginationLogs } from '../PaginationLogs'
 
 type DashboardProps = {
   entity: string

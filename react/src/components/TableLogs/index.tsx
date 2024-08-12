@@ -4,13 +4,13 @@
 import React, { useEffect, useState } from 'react'
 import { IoCheckmarkCircle, IoCloseCircle } from 'react-icons/io5'
 import { FcSearch } from 'react-icons/fc'
-import { Table, EXPERIMENTAL_Select as Select } from 'vtex.styleguide'
+import { Table } from 'vtex.styleguide'
 
 import { ModalJsonView } from '../ModalJsonView/Index'
 import styles from './index.css'
-import type { PaginationLogsType } from '../../typings/dashboard'
-import type { PerformanceObject } from '../../src/utils/performance/performance'
-import useFilters from './useFilters'
+import useFilters from '../../hook/useFilters'
+import type { PerformanceObject } from '../../utils/performance/performance'
+import type { PaginationLogsType } from '../../../typings/dashboard'
 
 type TableLogsProps = {
   items: PerformanceObject[]

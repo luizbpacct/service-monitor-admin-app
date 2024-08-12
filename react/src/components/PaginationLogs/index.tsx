@@ -4,7 +4,7 @@
 import React from 'react'
 import { Pagination } from 'vtex.styleguide'
 
-import type { PaginationType } from '../../typings/dashboard'
+import type { PaginationType } from '../../../typings/dashboard'
 
 type PaginationLogsProps = {
   pagination: PaginationType

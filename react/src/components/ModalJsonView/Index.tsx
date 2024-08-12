@@ -6,7 +6,7 @@ import { Modal, InputButton, Box, Tag } from 'vtex.styleguide'
 import { JsonEditor } from 'json-edit-react'
 
 import style from './index.css'
-import { BUTTON_COPY_CONFIG } from '../../src/utils/constants'
+import { BUTTON_COPY_CONFIG } from '../../utils/constants'
 
 type ModalJsonViewProps = {
   isOpen: boolean

@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react'
 import { EXPERIMENTAL_Select as Select, Input } from 'vtex.styleguide'
 
+import type { OptionSelect } from '../../typings/global'
 import {
   checkIfIncludeStrings,
   checkIfStringsEqual,
-} from '../../src/utils/helperArrayCompare '
-import type { OptionSelect } from '../../typings/global'
+} from '../utils/helperArrayCompare '
 
 type FilterStatement = {
   subject: string
@@ -172,7 +172,7 @@ function useFilters<T>(items: T[] | any[]) {
           object: processingTimeFilter.object,
         },
         {
-          label: '<=>',
+          label: '<=',
           value: '<=',
           object: processingTimeFilter.object,
         },
